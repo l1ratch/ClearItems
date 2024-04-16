@@ -1,0 +1,24 @@
+# ClearItems by l1ratch
+# A plugin to automatically remove objects that have been lying on the ground for a certain period of time.
+
+# Configuring the main functionality of the plugin.
+clear_delay: 60
+clear_message: "&c&lThe dropped item has been cleared."
+
+# Customize the text of the plugins alerts.
+notification_5s: "&cItem will be cleared in &a5 &cseconds."
+notification_10s: "&cItem will be cleared in &a10 &cseconds."
+notification_15s: "&cItem will be cleared in &a15 &cseconds."
+
+# Turn on the illumination of objects that will be removed after 15 seconds.
+highlight_15s_items: false
+
+# It is not recommended to change! ONLY FOR TRANSLATION! Do not use color codes! Keep the format of the written text!
+highlight_15s_Items_msg1: "Item will be cleared in 15 seconds."
+highlight_15s_Items_msg2: " will be cleared in 15 seconds."
+
+# Setting up logging for deleted items.
+log_clear_interval: 3600
+enable_logging: false
+
+# Plugin version: 2.5
