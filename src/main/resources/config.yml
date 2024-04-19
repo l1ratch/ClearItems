@@ -1,24 +1,32 @@
-# ClearItems by l1ratch
-# A plugin to automatically remove objects that have been lying on the ground for a certain period of time.
+# ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.
+# Примечание: Если вы хотите отключить определенное оповещение оставьте строку пустой: notification_15s: ""
+# Plugin Version: 3.1
 
-# Configuring the main functionality of the plugin.
-clear_delay: 60
-clear_message: "&c&lThe dropped item has been cleared."
+notification_prefix: "&7[ItemClear]" #Prefix for all plugin alerts.
 
-# Customize the text of the plugins alerts.
-notification_5s: "&cItem will be cleared in &a5 &cseconds."
-notification_10s: "&cItem will be cleared in &a10 &cseconds."
-notification_15s: "&cItem will be cleared in &a15 &cseconds."
+clear_interval: 600 #The interval in seconds between cleaning items.
 
-# Turn on the illumination of objects that will be removed after 15 seconds.
-highlight_15s_items: false
+notification_15s: "&eItems will be cleared in 15 seconds!" #Notification text 15 seconds before cleaning.
+notification_10s: "&eItems will be cleared in 10 seconds!" #Notification text 10 seconds before cleaning.
+notification_5s: "&eItems will be cleared in 5 seconds!" #Notification text 5 seconds before cleaning.
 
-# It is not recommended to change! ONLY FOR TRANSLATION! Do not use color codes! Keep the format of the written text!
-highlight_15s_Items_msg1: "Item will be cleared in 15 seconds."
-highlight_15s_Items_msg2: " will be cleared in 15 seconds."
+highlight_enabled: true #Turns on the backlight function of objects if there is less than 15 seconds left after cleaning.
+highlight_color: "RED" #The color of the illumination of objects before cleaning (default is "RED" for red).
 
-# Setting up logging for deleted items.
-log_clear_interval: 3600
-enable_logging: false
-
-# Plugin version: 2.5
+#Minecraft has a variety of colors that can be used to highlight text or objects. Here are some of them:
+#  1.Черный (BLACK)
+#  2.Темно-синий (DARK_BLUE)
+#  3.Темно-зеленый (DARK_GREEN)
+#  4.Темно-бирюзовый (DARK_AQUA)
+#  5.Темно-красный (DARK_RED)
+#  6.Темно-фиолетовый (DARK_PURPLE)
+#  7.Золотой (GOLD)
+#  8.Серый (GRAY)
+#  9.Темно-серый (DARK_GRAY)
+#  10.Синий (BLUE)
+#  11.Зеленый (GREEN)
+#  12.Бирюзовый (AQUA)
+#  13.Красный (RED)
+#  14.Фиолетовый (LIGHT_PURPLE)
+#  15.Желтый (YELLOW)
+#  16.Белый (WHITE)
