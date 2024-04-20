@@ -1,5 +1,0 @@
-name: ClearItems
-version: '2.5'
-main: l1ratch.clearitems.ClearItems
-description: |
-  Плагин для автоматического удаления валяющихся предметов на земле в Minecraft.
