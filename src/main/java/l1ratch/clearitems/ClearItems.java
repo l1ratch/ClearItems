@@ -50,6 +50,7 @@ public class ClearItems extends JavaPlugin implements Listener {
         });
     }
 
+
     @EventHandler
     public void onWorldInit(WorldInitEvent event) {
         startItemClearTask(event.getWorld());
@@ -77,67 +78,69 @@ public class ClearItems extends JavaPlugin implements Listener {
             @Override
             public void run() {
                 for (World world : Bukkit.getWorlds()) {
-                    clearItems(world);
+                    Bukkit.getScheduler().runTask(ClearItems.this, () -> clearItems(world));
                 }
             }
-        }.runTaskTimerAsynchronously(this, clearInterval * 20L, clearInterval * 20L);
+        }.runTaskTimer(this, clearInterval * 20L, clearInterval * 20L);
     }
 
     private void startItemClearTask(World world) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                clearItems(world);
+                Bukkit.getScheduler().runTask(ClearItems.this, () -> clearItems(world));
             }
-        }.runTaskTimerAsynchronously(this, clearInterval * 20L, clearInterval * 20L);
+        }.runTaskTimer(this, clearInterval * 20L, clearInterval * 20L);
     }
 
     private void clearItems(World world) {
-        world.getEntitiesByClass(Item.class).forEach(Item::remove);
-        int warningTime = clearInterval - 15;
-        if (warningTime <= 0) {
-            broadcastNotification(notificationPrefix + " " + notification15s);
-            return;
-        }
-        new BukkitRunnable() {
-            @Override
-            public void run() {
+        Bukkit.getScheduler().runTask(this, () -> {
+            world.getEntitiesByClass(Item.class).forEach(Item::remove);
+            int warningTime = clearInterval - 15;
+            if (warningTime <= 0) {
                 broadcastNotification(notificationPrefix + " " + notification15s);
+                return;
             }
-        }.runTaskLaterAsynchronously(this, warningTime * 20L);
-
-        warningTime -= 5;
-        if (warningTime <= 0) {
-            broadcastNotification(notificationPrefix + " " + notification10s);
-            return;
-        }
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                broadcastNotification(notificationPrefix + " " + notification10s);
-            }
-        }.runTaskLaterAsynchronously(this, warningTime * 20L);
-
-        warningTime -= 5;
-        if (warningTime <= 0) {
-            broadcastNotification(notificationPrefix + " " + notification5s);
-            return;
-        }
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                broadcastNotification(notificationPrefix + " " + notification5s);
-            }
-        }.runTaskLaterAsynchronously(this, warningTime * 20L);
-
-        if (highlightEnabled) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    highlightItems(world);
+                    broadcastNotification(notificationPrefix + " " + notification15s);
                 }
-            }.runTaskLaterAsynchronously(this, (clearInterval - 15) * 20L);
-        }
+            }.runTaskLaterAsynchronously(this, warningTime * 20L);
+
+            warningTime -= 5;
+            if (warningTime <= 0) {
+                broadcastNotification(notificationPrefix + " " + notification10s);
+                return;
+            }
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    broadcastNotification(notificationPrefix + " " + notification10s);
+                }
+            }.runTaskLaterAsynchronously(this, warningTime * 20L);
+
+            warningTime -= 5;
+            if (warningTime <= 0) {
+                broadcastNotification(notificationPrefix + " " + notification5s);
+                return;
+            }
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    broadcastNotification(notificationPrefix + " " + notification5s);
+                }
+            }.runTaskLaterAsynchronously(this, warningTime * 20L);
+
+            if (highlightEnabled) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        highlightItems(world);
+                    }
+                }.runTaskLaterAsynchronously(this, (clearInterval - 15) * 20L);
+            }
+        });
     }
 
     private void broadcastNotification(String message) {
