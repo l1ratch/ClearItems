@@ -1,6 +1,7 @@
 package l1ratch.clearitems;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,7 +15,7 @@ public class ClearItems extends JavaPlugin {
 
     private int clearInterval = 300; // Время в тиках (1 секунда = 20 тиков)
     private String removalMessage = "Item removed!"; // Сообщение о удалении предмета
-    private Map<Integer, String> warningMessages = new HashMap<>(); // Оповещения о времени до удаления предметов
+    private final Map<Integer, String> warningMessages = new HashMap<>(); // Оповещения о времени до удаления предметов
 
     @Override
     public void onEnable() {
@@ -58,13 +59,13 @@ public class ClearItems extends JavaPlugin {
                     int timeLeft = (item.getTicksLived() - clearInterval) / 20; // в секундах
                     if (warningMessages.containsKey(timeLeft)) {
                         String message = warningMessages.get(timeLeft);
-                        Bukkit.broadcastMessage(message);
+                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
                     }
                     // Удаляем предмет, если он существует более clearInterval тиков
                     if (item.getTicksLived() >= clearInterval) {
                         item.remove();
                         // Отправляем сообщение об удалении предмета
-                        Bukkit.broadcastMessage(removalMessage);
+                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', removalMessage));
                     }
                 }
             });

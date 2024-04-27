@@ -2,23 +2,23 @@
 A plugin to automatically remove objects that have been lying on the ground <br>
 for a certain period of time.
 
-# Plugin Version: 1.5.3
+# Plugin Version: 1.5.4
 Починил оповещение об удалении.<br>
 
 # Config File
 #ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.<br>
 #Note: If you want to disable a specific alert, leave the line blank: notification_15s: ""<br>
 
-# Интервал удаления предметов в тиках (1 секунда = 20 тиков)
-clearInterval: 300
+#Интервал удаления предметов в тиках (1 секунда = 20 тиков)<br>
+clearInterval: 300<br>
 
-# Сообщение о удалении предмета
-removalMessage: "&cItem removed!"
+#Сообщение о удалении предмета<br>
+removalMessage: "&cItem removed!"<br>
 
-# Сообщение об оставшемся времении до удаления
+#Сообщение об оставшемся времении до удаления<br>
 warningMessages:
-- "15,Item will be removed in 15 seconds!"
-- "5,Item will be removed in 5 seconds!"
+- "15,Item will be removed in 15 seconds!"<br>
+- "5,Item will be removed in 5 seconds!"<br>
 
 #Minecraft has a variety of colors that can be used to highlight text or objects. Here are some of them:<br>
   1.Черный (BLACK)<br>
