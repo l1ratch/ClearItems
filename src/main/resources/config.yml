@@ -1,5 +1,5 @@
 # ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.
-# Примечание: Если вы хотите отключить определенное оповещение оставьте строку пустой: notification_15s: ""
+# Примечание: Если вы хотите отключить определенное оповещение оставьте строку пустой: notification: ""
 
 # Интервал удаления предметов в тиках (1 секунда = 20 тиков)
 clearInterval: 300
