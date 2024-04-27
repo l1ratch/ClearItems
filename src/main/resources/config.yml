@@ -7,6 +7,12 @@ clearInterval: 300
 # Сообщение о удалении предмета
 removalMessage: "&cItem removed!"
 
+# Сообщение об оставшемся времении до удаления
+warningMessages:
+  - "15,Item will be removed in 15 seconds!"
+  - "5,Item will be removed in 5 seconds!"
+
+
 #Minecraft has a variety of colors that can be used to highlight text or objects. Here are some of them:
 #  1.Черный (BLACK)
 #  2.Темно-синий (DARK_BLUE)
