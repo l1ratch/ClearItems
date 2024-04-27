@@ -2,6 +2,7 @@ package l1ratch.clearitems;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Item;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,24 +52,24 @@ public class ClearItems extends JavaPlugin {
         }
     }
 
+    // Метод удаления предметов
     private void clearItems() {
-        Bukkit.getServer().getWorlds().forEach(world -> {
-            Bukkit.getScheduler().runTask(this, () -> {
-                for (Item item : world.getEntitiesByClass(Item.class)) {
-                    // Отправляем оповещения о времени до удаления предмета
-                    int timeLeft = (item.getTicksLived() - clearInterval) / 20; // в секундах
-                    if (warningMessages.containsKey(timeLeft)) {
-                        String message = warningMessages.get(timeLeft);
-                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
-                    }
-                    // Удаляем предмет, если он существует более clearInterval тиков
-                    if (item.getTicksLived() >= clearInterval) {
-                        item.remove();
-                        // Отправляем сообщение об удалении предмета
-                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', removalMessage));
-                    }
+        for (World world : Bukkit.getServer().getWorlds()) {
+            Bukkit.getScheduler().runTask(this, () -> world.getEntitiesByClass(Item.class).forEach(item -> {
+                // Проверяем, существует ли предмет и не был ли он уже удален
+                if (!item.isValid() || item.isDead()) return;
+
+                int timeLeft = (item.getTicksLived() - clearInterval) / 20; // в секундах
+                if (warningMessages.containsKey(timeLeft)) {
+                    String message = warningMessages.get(timeLeft);
+                    Bukkit.broadcastMessage(message);
                 }
-            });
-        });
+                if (item.getTicksLived() >= clearInterval) {
+                    item.remove();
+                    Bukkit.broadcastMessage(removalMessage);
+                }
+            }));
+        }
     }
+
 }
