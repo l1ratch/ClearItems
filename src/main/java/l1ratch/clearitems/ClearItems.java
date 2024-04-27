@@ -23,9 +23,9 @@ public class ClearItems extends JavaPlugin implements Listener {
         saveDefaultConfig();
 
         // Инициализация переменных из конфигурации
-        clearInterval = getConfig().getInt("clearInterval", 300); // По умолчанию каждые 5 минут
+        clearInterval = getConfig().getInt("clearInterval", 60); // По умолчанию каждые 5 минут
         warningMessages = getConfig().getStringList("warningMessages"); // Сообщения с предупреждениями
-        clearMessage = getConfig().getString("clearMessage", "Все предметы были удалены.");
+        clearMessage = getConfig().getString("clearMessage", "&cClearItems &7&l| &aВсе предметы были удалены.");
 
         // Преобразование цветов в тексте конфигурации
         for (int i = 0; i < warningMessages.size(); i++) {

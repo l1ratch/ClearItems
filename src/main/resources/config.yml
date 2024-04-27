@@ -1,32 +1,13 @@
 # ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.
-# Примечание: Если вы хотите отключить определенное оповещение оставьте строку пустой: notification: ""
+# Note: If you want to disable a specific alert, leave the line blank: notification: ""
 
-# Интервал в секундах для очистки предметов
+# The interval in seconds before cleaning the items.
 clearInterval: 60
 
-# Сообщение, которое будет отправлено в чат после очистки предметов
-clearMessage: "&aВсе предметы были удалены."
+# A message about the removal of items.
+clearMessage: "&cClearItems &7&l| &aВсе предметы были удалены."
 
-# Сообщение об оставшемся времении до удаления
+# A message about the remaining time before deletion.
 warningMessages:
-  - "15,&cItem will be removed in 15 seconds!"
-  - "5,&eItem will be removed in 5 seconds!"
-
-
-#Minecraft has a variety of colors that can be used to highlight text or objects. Here are some of them:
-#  1.Черный (BLACK)
-#  2.Темно-синий (DARK_BLUE)
-#  3.Темно-зеленый (DARK_GREEN)
-#  4.Темно-бирюзовый (DARK_AQUA)
-#  5.Темно-красный (DARK_RED)
-#  6.Темно-фиолетовый (DARK_PURPLE)
-#  7.Золотой (GOLD)
-#  8.Серый (GRAY)
-#  9.Темно-серый (DARK_GRAY)
-#  10.Синий (BLUE)
-#  11.Зеленый (GREEN)
-#  12.Бирюзовый (AQUA)
-#  13.Красный (RED)
-#  14.Фиолетовый (LIGHT_PURPLE)
-#  15.Желтый (YELLOW)
-#  16.Белый (WHITE)
+  - "15,&cClearItems &7&l| &eItem will be removed in 15 seconds!"
+  - "5,&cClearItems &7&l| &eItem will be removed in 5 seconds!"
