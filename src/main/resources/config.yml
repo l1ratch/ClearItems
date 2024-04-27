@@ -5,12 +5,12 @@
 clearInterval: 60
 
 # Сообщение, которое будет отправлено в чат после очистки предметов
-clearMessage: "&cВсе предметы были удалены."
+clearMessage: "&aВсе предметы были удалены."
 
 # Сообщение об оставшемся времении до удаления
-#warningMessages:
-#  - "15,Item will be removed in 15 seconds!"
-#  - "5,Item will be removed in 5 seconds!"
+warningMessages:
+  - "15,&cItem will be removed in 15 seconds!"
+  - "5,&eItem will be removed in 5 seconds!"
 
 
 #Minecraft has a variety of colors that can be used to highlight text or objects. Here are some of them:
