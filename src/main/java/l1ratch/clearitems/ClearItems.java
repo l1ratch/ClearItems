@@ -31,13 +31,17 @@ public class ClearItems extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onItemSpawn(ItemSpawnEvent event) {
-        // Отмена события спавна предмета
-        event.setCancelled(true);
+        // Ничего не делаем при спавне предметов
     }
 
     public void clearItems() {
         // Итерация по всем предметам в мире
         for (Item item : Bukkit.getWorlds().get(0).getEntitiesByClass(Item.class)) {
+            // Проверка, находится ли предмет на земле
+            if (!item.isOnGround()) {
+                continue; // Если не на земле, пропускаем
+            }
+
             // Удаление предмета
             item.remove();
         }
@@ -46,3 +50,4 @@ public class ClearItems extends JavaPlugin implements Listener {
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', clearMessage));
     }
 }
+
