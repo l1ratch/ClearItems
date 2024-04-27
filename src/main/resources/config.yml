@@ -5,7 +5,7 @@
 clearInterval: 300
 
 # Сообщение о удалении предмета
-removalMessage: "&cItem removed!"
+removalMessage: "&cItem removed! test-0.1"
 
 # Сообщение об оставшемся времении до удаления
 warningMessages:

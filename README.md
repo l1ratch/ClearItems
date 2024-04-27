@@ -2,7 +2,7 @@
 A plugin to automatically remove objects that have been lying on the ground <br>
 for a certain period of time.
 
-# Plugin Version: 1.5.6
+# Plugin Version: test-*
 Починил оповещение об удалении.<br>
 
 # Config File
