@@ -57,7 +57,8 @@ public class ClearItems extends JavaPlugin {
                     // Отправляем оповещения о времени до удаления предмета
                     int timeLeft = (item.getTicksLived() - clearInterval) / 20; // в секундах
                     if (warningMessages.containsKey(timeLeft)) {
-                        Bukkit.broadcastMessage(warningMessages.get(timeLeft));
+                        String message = warningMessages.get(timeLeft);
+                        Bukkit.broadcastMessage(message);
                     }
                     // Удаляем предмет, если он существует более clearInterval тиков
                     if (item.getTicksLived() >= clearInterval) {
@@ -70,6 +71,3 @@ public class ClearItems extends JavaPlugin {
         });
     }
 }
-
-
-

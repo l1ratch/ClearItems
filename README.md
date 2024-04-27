@@ -2,8 +2,8 @@
 A plugin to automatically remove objects that have been lying on the ground <br>
 for a certain period of time.
 
-# Plugin Version: 1.5.2
-Изменен код плагина.<br>
+# Plugin Version: 1.5.3
+Починил оповещение об удалении.<br>
 
 # Config File
 #ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.<br>
