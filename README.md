@@ -2,12 +2,12 @@
 A plugin to automatically remove objects that have been lying on the ground <br>
 for a certain period of time.
 
-# Plugin Version: 0.1
-Первая готовая версия плагина.<br>
+# Plugin Version: 0.3
+Добавлена возможность выключить оповещение об удалении предметов, оставив строку пустой.<br>
 
 # Config File
 #ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.<br>
-#Note: If you want to disable a specific alert, leave the line blank: notification: ""<br>
+#Note: If you want to disable a specific alert, leave the line blank: clearMessage: ""<br>
 
 #The interval in seconds before cleaning the items.<br>
 clearInterval: 60<br>

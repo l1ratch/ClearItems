@@ -25,13 +25,15 @@ public class ClearItems extends JavaPlugin implements Listener {
         // Инициализация переменных из конфигурации
         clearInterval = getConfig().getInt("clearInterval", 60); // По умолчанию каждые 5 минут
         warningMessages = getConfig().getStringList("warningMessages"); // Сообщения с предупреждениями
-        clearMessage = getConfig().getString("clearMessage", "&cClearItems &7&l| &aВсе предметы были удалены.");
+        clearMessage = getConfig().getString("clearMessage", null);
 
         // Преобразование цветов в тексте конфигурации
         for (int i = 0; i < warningMessages.size(); i++) {
             warningMessages.set(i, ChatColor.translateAlternateColorCodes('&', warningMessages.get(i)));
         }
-        clearMessage = ChatColor.translateAlternateColorCodes('&', clearMessage);
+        if (clearMessage != null) {
+            clearMessage = ChatColor.translateAlternateColorCodes('&', clearMessage);
+        }
 
         // Регистрация слушателя событий
         getServer().getPluginManager().registerEvents(this, this);
@@ -76,7 +78,9 @@ public class ClearItems extends JavaPlugin implements Listener {
                 }
 
                 // Отправка сообщения в чат
-                Bukkit.broadcastMessage(clearMessage);
+                if (clearMessage != null) {
+                    Bukkit.broadcastMessage(clearMessage);
+                }
             }
         }.runTaskLater(this, clearInterval * 20L);
     }

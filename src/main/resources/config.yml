@@ -1,5 +1,5 @@
 # ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.
-# Note: If you want to disable a specific alert, leave the line blank: notification: ""
+# Note: If you want to disable a specific alert, leave the line blank: clearMessage: ""
 
 # The interval in seconds before cleaning the items.
 clearInterval: 60
