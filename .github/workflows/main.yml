@@ -38,7 +38,8 @@ jobs:
           tag_name: v${{ env.VERSION }}
           release_name: Release v${{ env.VERSION }}
           body: |
-            Изменения в Readme.md
+            Изменения в README.md:
+            https://github.com/l1ratch/ClearItems/blob/v0.3/README.md
           draft: false
           prerelease: false
         env:
