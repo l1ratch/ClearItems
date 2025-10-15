@@ -2,12 +2,14 @@
 # Note: If you want to disable a specific alert, leave the line blank: clearMessage: ""
 
 # The interval in seconds before cleaning the items.
-clearInterval: 60
+clearInterval: 300  # 5 минут в секундах
 
 # A message about the removal of items.
 clearMessage: "&cClearItems &7&l| &aВсе предметы были удалены."
 
 # A message about the remaining time before deletion.
 warningMessages:
-  - "15,&cClearItems &7&l| &eItem will be removed in 15 seconds!"
-  - "5,&cClearItems &7&l| &eItem will be removed in 5 seconds!"
+  - "60,&cClearItems &7&l| &eПредметы будут удалены через 1 минуту!"
+  - "30,&cClearItems &7&l| &eПредметы будут удалены через 30 секунд!"
+  - "10,&cClearItems &7&l| &eПредметы будут удалены через 10 секунд!"
+  - "5,&cClearItems &7&l| &cПредметы будут удалены через 5 секунд!"

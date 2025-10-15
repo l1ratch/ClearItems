@@ -1,5 +1,6 @@
 name: ClearItems
 version: '${project.version}'
 main: l1ratch.clearitems.ClearItems
+api-version: '1.20'
 description: |
   Плагин для автоматического удаления валяющихся предметов на земле в Minecraft.

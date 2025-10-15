@@ -2,86 +2,149 @@ package l1ratch.clearitems;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClearItems extends JavaPlugin implements Listener {
-    private int clearInterval; // Интервал в секундах
-    private List<String> warningMessages; // Список сообщений с предупреждениями
-    private String clearMessage; // Сообщение в чате
+    private int clearInterval;
+    private List<WarningTask> warningTasks;
+    private String clearMessage;
+    private BukkitTask mainTask;
+
+    private class WarningTask {
+        private final int timeLeft;
+        private final String message;
+        private BukkitTask task;
+
+        public WarningTask(int timeLeft, String message) {
+            this.timeLeft = timeLeft;
+            this.message = message;
+        }
+
+        public void schedule() {
+            this.task = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Bukkit.broadcastMessage(message);
+                }
+            }.runTaskLater(ClearItems.this, (clearInterval - timeLeft) * 20L);
+        }
+
+        public void cancel() {
+            if (task != null && !task.isCancelled()) {
+                task.cancel();
+            }
+        }
+    }
 
     @Override
     public void onEnable() {
-        // Загрузка конфигурации
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
-        // Инициализация переменных из конфигурации
-        clearInterval = getConfig().getInt("clearInterval", 60); // По умолчанию каждые 5 минут
-        warningMessages = getConfig().getStringList("warningMessages"); // Сообщения с предупреждениями
+        clearInterval = getConfig().getInt("clearInterval", 300); // Исправлено на 300 секунд по умолчанию
+        warningTasks = new ArrayList<>();
         clearMessage = getConfig().getString("clearMessage", null);
 
-        // Преобразование цветов в тексте конфигурации
-        for (int i = 0; i < warningMessages.size(); i++) {
-            warningMessages.set(i, ChatColor.translateAlternateColorCodes('&', warningMessages.get(i)));
+        // Обработка сообщений
+        List<String> warningMessages = getConfig().getStringList("warningMessages");
+        for (String message : warningMessages) {
+            if (message != null && !message.trim().isEmpty()) {
+                String[] parts = message.split(",", 2); // Ограничиваем split 2 частями
+                if (parts.length == 2) {
+                    try {
+                        int warningTime = Integer.parseInt(parts[0].trim());
+                        String warningText = ChatColor.translateAlternateColorCodes('&', parts[1].trim());
+                        warningTasks.add(new WarningTask(warningTime, warningText));
+                    } catch (NumberFormatException e) {
+                        getLogger().warning("Некорректное время предупреждения: " + parts[0]);
+                    }
+                }
+            }
         }
+
         if (clearMessage != null) {
             clearMessage = ChatColor.translateAlternateColorCodes('&', clearMessage);
         }
 
-        // Регистрация слушателя событий
         getServer().getPluginManager().registerEvents(this, this);
+        startClearTask();
+    }
 
-        // Запуск задачи очистки предметов по расписанию
-        Bukkit.getScheduler().runTaskTimer(this, this::clearItems, clearInterval * 20L, clearInterval * 20L);
+    private void startClearTask() {
+        // Отменяем существующую задачу если есть
+        if (mainTask != null) {
+            mainTask.cancel();
+        }
+
+        mainTask = new BukkitRunnable() {
+            @Override
+            public void run() {
+                performClear();
+            }
+        }.runTaskTimer(this, clearInterval * 20L, clearInterval * 20L);
+
+        // Запускаем предупреждения
+        scheduleWarnings();
+    }
+
+    private void scheduleWarnings() {
+        // Отменяем старые предупреждения
+        for (WarningTask task : warningTasks) {
+            task.cancel();
+        }
+
+        // Запускаем новые
+        for (WarningTask task : warningTasks) {
+            task.schedule();
+        }
+    }
+
+    private void performClear() {
+        int removedItems = 0;
+
+        // Очищаем все миры
+        for (World world : Bukkit.getWorlds()) {
+            for (Item item : world.getEntitiesByClass(Item.class)) {
+                if (item.isOnGround()) {
+                    item.remove();
+                    removedItems++;
+                }
+            }
+        }
+
+        // Сообщение об очистке
+        if (clearMessage != null && !clearMessage.isEmpty()) {
+            Bukkit.broadcastMessage(clearMessage);
+        }
+
+        getLogger().info("Удалено " + removedItems + " предметов");
+
+        // Перезапускаем предупреждения для следующего цикла
+        scheduleWarnings();
+    }
+
+    @Override
+    public void onDisable() {
+        if (mainTask != null) {
+            mainTask.cancel();
+        }
+        for (WarningTask task : warningTasks) {
+            task.cancel();
+        }
     }
 
     @EventHandler
     public void onItemSpawn(ItemSpawnEvent event) {
-        // Ничего не делаем при спавне предметов
-    }
-
-    public void clearItems() {
-        // Отправляем предупреждение
-        for (String message : warningMessages) {
-            String[] parts = message.split(",");
-            int warningTime = Integer.parseInt(parts[0]);
-            String warningMessage = parts[1];
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', warningMessage));
-                }
-            }.runTaskLater(this, (clearInterval - warningTime) * 20L);
-        }
-
-        // Запланированная задача на очистку предметов
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                // Итерация по всем предметам в мире
-                for (Item item : Bukkit.getWorlds().get(0).getEntitiesByClass(Item.class)) {
-                    // Проверка, находится ли предмет на земле
-                    if (!item.isOnGround()) {
-                        continue; // Если не на земле, пропускаем
-                    }
-
-                    // Удаление предмета
-                    item.remove();
-                }
-
-                // Отправка сообщения в чат
-                if (clearMessage != null) {
-                    Bukkit.broadcastMessage(clearMessage);
-                }
-            }
-        }.runTaskLater(this, clearInterval * 20L);
+        // Можно добавить логику отслеживания предметов
     }
 }
