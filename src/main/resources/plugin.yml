@@ -2,5 +2,17 @@ name: ClearItems
 version: '${project.version}'
 main: l1ratch.clearitems.ClearItems
 api-version: '1.20'
-description: |
-  Плагин для автоматического удаления валяющихся предметов на земле в Minecraft.
+description: Clears items on ground after specified interval
+author: l1ratch
+
+commands:
+  clearitems:
+    description: Reload ClearItems configuration
+    usage: /<command> reload
+    permission: clearitems.reload
+    aliases: [ci]
+
+permissions:
+  clearitems.reload:
+    description: Allows to reload plugin configuration
+    default: op

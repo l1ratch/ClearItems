@@ -1,13 +1,28 @@
-# ClearItems by l1ratch. A plugin that removes all lying objects in the worlds after a specified interval.
-# Note: If you want to disable a specific alert, leave the line blank: clearMessage: ""
+# Конфигурация ClearItems от l1ratch
+# Плагин, который удаляет все лежащие предметы в мирах через указанный интервал
 
-# The interval in seconds before cleaning the items.
-clearInterval: 300  # 5 минут в секундах
+# Интервал в секундах до очистки элементов (по умолчанию: 300 = 5 минут)
+clearInterval: 300
 
-# A message about the removal of items.
+# Сообщение о рассылке при очистке корзины (оставьте поле пустым, чтобы отключить)
 clearMessage: "&cClearItems &7&l| &aВсе предметы были удалены."
 
-# A message about the remaining time before deletion.
+# Миры, в которых включена очистка предметов (имеет приоритет над исключёнными мирами)
+# Если пусто — включены все миры, кроме исключённых
+enabledWorlds: []
+  # - "world"
+# - "survival"
+
+# Миры, в которых очистка предметов ОТКЛЮЧЕНА
+# Используется только в том случае, если список enabledWorlds пуст
+excludedWorlds:
+  - "world_nether"
+  - "world_the_end"
+  # - "my_custom_world"
+
+# Предупреждающие сообщения об оставшемся времени до удаления
+# Формат: «секунды, сообщение»
+# Оставьте строку пустой, чтобы отключить конкретное предупреждение
 warningMessages:
   - "60,&cClearItems &7&l| &eПредметы будут удалены через 1 минуту!"
   - "30,&cClearItems &7&l| &eПредметы будут удалены через 30 секунд!"

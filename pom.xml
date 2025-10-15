@@ -6,7 +6,7 @@
 
   <groupId>l1ratch</groupId>
   <artifactId>ClearItems</artifactId>
-  <version>0.3</version>
+  <version>1.0</version>
   <packaging>jar</packaging>
 
   <name>ClearItems</name>
